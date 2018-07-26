@@ -27,7 +27,7 @@ exports.genHeader = function (MID, httpmethod,URI, timestamp, nonce, payload, AP
           try{
             var a = MID + httpmethod + URI + timestamp + nonce + base64Payload
             var signatureRawData = a.toString()
-            console.log(signatureRawData)
+           // console.log(signatureRawData)
             let newBuff = Buffer.from(APIkey, 'base64')
             var secretKeyByteArray = Buffer.from(newBuff, 'utf8')
             var signature1 = new Buffer(signatureRawData).toString('utf8')
@@ -35,7 +35,7 @@ exports.genHeader = function (MID, httpmethod,URI, timestamp, nonce, payload, AP
             //console.log("requestSignatureBase64String", requestSignatureBase64String)
             sign = MID+"||"+ requestSignatureBase64String+"||"+ nonce+ "||"+timestamp
             return sign
-            consle.log(sign)
+           
 
        } catch(e)
           {
