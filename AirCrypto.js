@@ -108,7 +108,7 @@ exports.paymentStatus = function (MID,APIkey,paymentID) {
 
     var payload = "";
 
-    var signature = header.genHeader(MID, httpmethod,URI, timestamp, nonce, payload, APIkey);
+    var signature = header.headergen(MID, httpmethod,URI, timestamp, nonce, payload, APIkey);
     return request({
             "encoding": 'utf8',
             "uri": URI,
