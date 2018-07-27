@@ -2,7 +2,7 @@
 'use strict'
 
 
-var aircrypto = require ('./AirCrypto.js')
+var aircrypto = require ('./index.js')
 
 var paymentID = "";
 // Quantities to get from user
