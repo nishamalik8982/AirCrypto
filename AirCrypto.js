@@ -1,7 +1,7 @@
 'use strict'
 
 
-exports.getRateNow = function (MID,APIkey){
+exports.getQuote = function (amount, fiatCurrency, cryptoType){
     var Promise = require("bluebird");
     var crypto = require("crypto");
     var randomNumber = require("random-number-csprng");
@@ -15,6 +15,8 @@ exports.getRateNow = function (MID,APIkey){
     var now = new Date();
     var timestamp = dateFormat(now, "yyyymmdd hh:MM:ss");
     var httpmethod="GET";
+    var MID = "CFF7D059-5EFC-49B2-BD18-B937261943B5";
+    var APIkey ="b25c9ae6f91d4c9f948b67ec00113456";
     var URI = "https://previewapi.paidbycoins.com/v1/cli/rates";
     var payload='';
 
@@ -39,7 +41,7 @@ exports.getRateNow = function (MID,APIkey){
             });
 }
 
-exports.createPayment = function (CryptoCurrency,Currency,Amount,MerchantRefNumber,Email,MID,APIkey){
+exports.createPayment = function (userEmail, cryptoType, Amount,MerchantRefNumber){
     var Promise = require("bluebird");
     var crypto = require("crypto");
     var randomNumber = require("random-number-csprng");
@@ -53,16 +55,19 @@ exports.createPayment = function (CryptoCurrency,Currency,Amount,MerchantRefNumb
     var nonce = rn.randomnumber(5);
     var now = new Date();
     var timestamp = dateFormat(now, "yyyymmdd hh:MM:ss");
+    var MID = "CFF7D059-5EFC-49B2-BD18-B937261943B5";
+    var APIkey ="b25c9ae6f91d4c9f948b67ec00113456";
     var httpmethod="POST";
+    var Currency = "AUD";
     var URI = "https://previewapi.paidbycoins.com/v1/cli/createpayment";
 
     var payload = JSON.stringify({
-        CryptoCurrency: CryptoCurrency,
+        CryptoCurrency: cryptoType,
         Currency: Currency,
         Amount: Amount,
         Detail:{
             MerchantRefNo: MerchantRefNumber,
-            Email: Email
+            Email: userEmail
         }
     });
 
@@ -89,7 +94,7 @@ exports.createPayment = function (CryptoCurrency,Currency,Amount,MerchantRefNumb
             });
 }
 
-exports.paymentStatus = function (MID,APIkey,paymentID) {
+exports.paymentStatus = function (paymentID) {
     var Promise = require("bluebird");
     var crypto = require("crypto");
     var randomNumber = require("random-number-csprng");
@@ -98,11 +103,13 @@ exports.paymentStatus = function (MID,APIkey,paymentID) {
     var querystring = require('querystring');
     var dateFormat = require('dateformat');
     var cryptoJS = require ('crypto-js');
-    var header = require ('./generatePBXHeader.js');
+    var header = require ('./headergen.js');
     const rn = require ('./randomno.js');
     var nonce = rn.randomnumber(5);
     var now = new Date();
     var timestamp = dateFormat(now, "yyyymmdd hh:MM:ss");
+    var MID = "CFF7D059-5EFC-49B2-BD18-B937261943B5";
+    var APIkey ="b25c9ae6f91d4c9f948b67ec00113456";
     var httpmethod="GET";
     var URI = "https://previewapi.paidbycoins.com/v1/cli/status/" + paymentID;
 
