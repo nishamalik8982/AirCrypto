@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>AirCrypto</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Credit Top-Up</h3>
+
+    <ion-list>
+      <ion-item>
+        <ion-label color="primary">Email</ion-label>
+        <ion-input id="email" placeholder="e.g user@gmail.com" type="email"  [(ngModel)]="email"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label color="primary">Amount</ion-label>
+        <ion-input id="amount" placeholder="e.g 100" type="number"  [(ngModel)]="amount"></ion-input>
+
+        <ion-select  placeholder="e.g AUD" [(ngModel)]="fiatcurrency" >
+          <ion-option value="USD" >USD</ion-option>
+          <ion-option value="AUD" >AUD</ion-option>
+        </ion-select>
+      </ion-item>
+      <!--<ion-item *ngIf="amount.hasError('required') && amount.touched">
+        <p>*Amount is required</p>
+      </ion-item> -->
+      <ion-item>
+        <ion-label color="primary">Payment method</ion-label>
+        <ion-select  (ionChange)="showHideCurrency()" [(ngModel)]="method">
+          <ion-option value="crypto">Crypto-top-up</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="hideShowCrypto">
+        <ion-label color="primary">Currency</ion-label>
+        <ion-select  (ionChange)="getRate()" [(ngModel)]="cryptoType">
+          <ion-option value="ETH">ETH</ion-option>
+          <ion-option value="BTC">BTC</ion-option>
+          <ion-option value="LTC">LTC</ion-option>
+          <ion-option value="BCH">BCH</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label id="quoteResponse"> </ion-label>
+      </ion-item>
+
+      <ion-item *ngIf="confirmQuote" >
+        <button ion-button (click)="createPayment()">Confirm</button>
+      </ion-item>
+      <ion-item *ngIf="status" >
+        <button ion-button (click)="paymentStatus()">Check status</button>
+      </ion-item>
+      <!-- <ion-item *ngIf="cryptoType.hasError('required') && cryptoType.touched">
+        <p>*Currency is required</p>
+      </ion-item>  -->
+
+    <!--
+      <form [formGroup] = "formgroup">  </form>
+    formControlName="cryptoType"
+    formControlName="amount"
+    #C (ionChange)="onChange(C.value)"
+
+        <pre> {{ formgroup.value | json}}</pre>
+
+        <button ion-button type="submit" block>Get Rate</button> -->
+
+    </ion-list>
+
+
+
+
+</ion-content>
