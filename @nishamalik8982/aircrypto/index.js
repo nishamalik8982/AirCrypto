@@ -42,7 +42,7 @@ exports.getQuote = function (amount, fiatCurrency, cryptoType){
           let desiredQuote = quotes.Data.filter(function(element){
             return element.PrimaryCurrency === cryptoType && element.SecondaryCurrency === fiatCurrency;
           });
-            return amount/desiredQuote[0].Price;
+            return (amount/desiredQuote[0].Price).toFixed(4);
         });
 }
 
