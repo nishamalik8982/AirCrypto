@@ -11,45 +11,62 @@
   <h3>Credit Top-Up</h3>
 
     <ion-list>
+      <!-- EMAIL -->
       <ion-item>
         <ion-label color="primary">Email</ion-label>
         <ion-input id="email" placeholder="e.g user@gmail.com" type="email"  [(ngModel)]="email"></ion-input>
       </ion-item>
-      <ion-item>
-        <ion-label color="primary">Amount</ion-label>
-        <ion-input id="amount" placeholder="e.g 100" type="number"  [(ngModel)]="amount"></ion-input>
-
-        <ion-select  placeholder="e.g AUD" [(ngModel)]="fiatcurrency" >
-          <ion-option value="USD" >USD</ion-option>
-          <ion-option value="AUD" >AUD</ion-option>
-        </ion-select>
-      </ion-item>
       <!--<ion-item *ngIf="amount.hasError('required') && amount.touched">
         <p>*Amount is required</p>
       </ion-item> -->
+
+      <!-- PAYMENT METHOD -->
       <ion-item>
         <ion-label color="primary">Payment method</ion-label>
-        <ion-select  (ionChange)="showHideCurrency()" [(ngModel)]="method">
+        <ion-select  (ionChange)="showAmount()" [(ngModel)]="method">
           <ion-option value="crypto">Crypto-top-up</ion-option>
         </ion-select>
       </ion-item>
-      <ion-item *ngIf="hideShowCrypto">
-        <ion-label color="primary">Currency</ion-label>
-        <ion-select  (ionChange)="getRate()" [(ngModel)]="cryptoType">
-          <ion-option value="ETH">ETH</ion-option>
-          <ion-option value="BTC">BTC</ion-option>
-          <ion-option value="LTC">LTC</ion-option>
-          <ion-option value="BCH">BCH</ion-option>
+
+      <!-- AMOUNT  & CURRENCY -->
+      <ion-item *ngIf="inputAmount">
+        <ion-label color="primary">Amount</ion-label>
+        <ion-input id="amount" placeholder="e.g 100" type="number"  [(ngModel)]="amount"></ion-input>
+
+        <ion-select  placeholder="e.g AUD" (ionChange)="getPrimaryCurrency()" [(ngModel)]="primaryCurrency" [selectedText]="Crypto">
+          <ion-option value="USD" >USD</ion-option>
+          <ion-option value="AUD">AUD</ion-option>
+          <ion-option value="CRYPTO">
+            CRYPTO
+            <ion-select #selectCrypto (ionChange)="updatePrimaryCurrency()" [(ngModel)]="Crypto" >
+              <ion-option value="ETH">ETH</ion-option>
+              <ion-option value="BTC">BTC</ion-option>
+              <ion-option value="LTC">LTC</ion-option>
+              <ion-option value="BCH">BCH</ion-option>
+            </ion-select>
+          </ion-option>
         </ion-select>
       </ion-item>
+
+
+      <ion-item *ngIf="showSecondaryCurrency">
+        <ion-label color="primary">Currency</ion-label>
+        <ion-select placeholder="" (ionChange)="getRate()" [(ngModel)]="secondaryCurrency">
+          <ion-option *ngFor="let item of secondaryCurrencyOptions" value="{{[item]}}">{{[item]}}</ion-option>
+        </ion-select>
+      </ion-item>
+
 
       <ion-item>
         <ion-label id="quoteResponse"> </ion-label>
       </ion-item>
 
+      <!-- CONFIRM BUTTON -->
       <ion-item *ngIf="confirmQuote" >
         <button ion-button (click)="createPayment()">Confirm</button>
       </ion-item>
+
+      <!-- GET STATUS BUTTON -->
       <ion-item *ngIf="status" >
         <button ion-button (click)="paymentStatus()">Check status</button>
       </ion-item>
