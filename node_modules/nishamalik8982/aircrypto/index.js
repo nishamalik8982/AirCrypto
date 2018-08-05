@@ -45,15 +45,14 @@ exports.getQuote = function (amount, primaryCurrency, secondaryCurrency){
         // If we want to convert crypto to fiat
         if (cryptoCurrency.includes(primaryCurrency)) {
           return element.PrimaryCurrency === primaryCurrency && element.SecondaryCurrency === secondaryCurrency;
-        } else {
+        } else { // If we want to convert fiat to crypto
           return element.PrimaryCurrency === secondaryCurrency && element.SecondaryCurrency === primaryCurrency;
         }
       });
-      console.log(desiredQuote[0]);
       // If we want to convert crypto to fiat
       if (cryptoCurrency.includes(primaryCurrency)) {
         return amount*desiredQuote[0].Price;
-      } else {
+      } else {// If we want to convert fiat to crypto
         return amount/desiredQuote[0].Price;
       }
     });

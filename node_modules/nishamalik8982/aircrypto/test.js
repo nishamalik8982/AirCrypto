@@ -6,20 +6,20 @@ var aircrypto = require ('./index.js');
 
 var paymentID = "";
 // Quantities to get from user
-var amount = 2;
-var fiatCurrency = "AUD"; // or USD ?
-var cryptoType = "XRP";
+var amount = 234;
+var primaryCurrency = "AUD"; // or USD ?
+var secondaryCurrency = "XRP";
 var userEmail = "user@gmail.com";
 var MerchantRefNumber = "345345345"; // ??
 
-aircrypto.getQuote(amount, "BTC", "AUD").then(function (res) {
+aircrypto.getQuote(amount, primaryCurrency, secondaryCurrency).then(function (res) {
   let quote = JSON.parse(res);
-  console.log('QUOTE: %f %s == %d %s',amount.toFixed(2),fiatCurrency,quote.toFixed(2),cryptoType);
+  console.log('QUOTE: %f %s == %d %s',amount.toFixed(2),primaryCurrency,quote.toFixed(2),secondaryCurrency);
 });
 
 
 
-aircrypto.createPayment(userEmail, "BTC", 11282).then(function (res) {
+aircrypto.createPayment(userEmail, secondaryCurrency, amount).then(function (res) {
   let payment = JSON.parse(res);
   paymentID = payment.Data.PaymentID;
 
