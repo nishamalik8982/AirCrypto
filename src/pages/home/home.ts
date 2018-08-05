@@ -16,7 +16,11 @@ export class HomePage {
   /*formgroup:FormGroup;
   amount:AbstractControl;
   cryptoType:AbstractControl;*/
-  public secondaryCurrencyOptions:Array<string>;
+  public  cryptoCurrency:Array<string> = ["ETH", "BTC", "LTC", "BCH"];
+  public showCrypto:boolean = false;
+  public showFiat:boolean = false;
+  public type:string = ""; // FIAT or CRYPTO
+
 
 
   @ViewChild('selectCrypto') selectCrypto: Select;
@@ -26,17 +30,12 @@ export class HomePage {
   // Currencies
   public primaryCurrency:string = "";
   public secondaryCurrency:string = "";
-  public Crypto:string = "";
   public secondaryCurrencyIsFiat:boolean = false;
   public amount:number = null;
-  public method:string = "";
+  public quoteResponse:boolean = false;
 
-  public fiatcurrency:string = "";
   public email:string = "";
   public quotedAmount:number = null;
-  public hideShowCrypto: boolean = false;
-  public showSecondaryCurrency: boolean = false;
-  public hideShowFiat: boolean = false;
   public inputAmount: boolean = false;
   public confirmQuote: boolean = false;
   public status: boolean = false;
@@ -49,39 +48,30 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController,
-              public http: HttpClient
-              /*public  navParams: NavParams,
-              public formBuilder: FormBuilder*/) {
-                  /*this.formgroup = formBuilder.group({
-                    amount:['',Validators.required],
-                    cryptoType:['',Validators.required]
-                  });
-                  this.amount= this.formgroup.controls['amount'];
-                  this.cryptoType= this.formgroup.controls['cryptoType'];*/
+              public http: HttpClient)
+              {
 
-  }
+              }
 
-  public getPrimaryCurrency() {
-    if (this.primaryCurrency === "CRYPTO") {
-      this.selectCrypto.open(); // select which crypto
+
+
+
+  showCurrency() {
+    if ( this.type === "CRYPTO" ) {
+      this.showCrypto = true;
+      this.showFiat = false;
+      this.secondaryCurrency = "AUD";
       this.secondaryCurrencyIsFiat = true;
-    } else if (this.primaryCurrency === "AUD" || this.primaryCurrency === "USD") {
-      this.secondaryCurrencyIsFiat = false;
-    }
-    this.getSecondaryCurrency();
-  }
-  public updatePrimaryCurrency() {
-    this.primaryCurrency = this.Crypto; // pre-set the cryptocurrency as primary currency
-  }
-
-
-  public getSecondaryCurrency() {
-    if ( this.secondaryCurrencyIsFiat ) {
-      this.secondaryCurrencyOptions = ["USD", "AUD"];
     } else {
-      this.secondaryCurrencyOptions = ["ETH", "BTC", "LTC", "BCH"];
+      this.secondaryCurrencyIsFiat = false;
+      this.showCrypto = false;
+      this.showFiat = true;
+      this.primaryCurrency = "AUD";
     }
-    this.showSecondaryCurrency = true; // show options in the form
+
+    this.status = false;
+    this.confirmQuote = false;
+    this.quoteResponse = true;
   }
 
   public showAmount() {
@@ -145,25 +135,7 @@ export class HomePage {
     }
 
   }
-  /*public createPayment() {
-    console.log('Creating payment');
 
-    this.http.post("localhost:3000/users/createPayment", { // see point 7 User Guide)
-      email : this.email,
-      quotedAmount: this.quotedAmount,
-      cryptoType: this.cryptoType
-    }).subscribe(
-      res => {
-    console.log(res);
-  },
-  (err: HttpErrorResponse) => {
-    console.log(err.error);
-    console.log(err.name);
-    console.log(err.message);
-    console.log(err.status);
-  }
-  );
-}*/
 
   public paymentStatus() {
     let that = this;
